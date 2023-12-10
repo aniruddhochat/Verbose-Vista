@@ -26,7 +26,7 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <title>Verbose Vista</title>
 </head>
-<body>
+<body style="background-image: url('{{ url_for('static', filename='background.png') }}');">
     <!-- Navigation Bar Start -->
     <section id="Navigation">
         <nav class="navbar navbar-expand-lg navbar-light danger-color bg-light">
@@ -37,7 +37,7 @@
                         <a class="nav-link selected" onclick= "window.location.href = 'home';" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="aboutUs">About Us</a>
+                        <a class="nav-link" href="upload">Upload a File</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="contactUs">Contact Us</a>
@@ -46,14 +46,37 @@
             </div>
         </nav>
     </section>
-    <h1>Verbose Vista</h1>
-    <h2>Search the number of times a keyword occurs in documents</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                {% if category == 'error' %}
+                    <div class="alert alert-danger alter-dismissable fade show" role="alert">
+                      {{ message }}
+                      <button type="button" class="close" data-dismiss="alert">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-success alter-dismissable fade show" role="alert">
+                      {{ message }}
+                      <button type="button" class="close" data-dismiss="alert">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
-    <div id="search-container">
-        <input type="text" id="search-input" placeholder="Enter your search keyword">
-        <button id="search-button" class="btn login" onclick="search()">Search</button>
+    {% if request.endpoint != 'upload' %}
+        <h1>Verbose Vista</h1>
+        <h2>Search the number of times a keyword occurs in documents</h2>
 
-    </div>
+        <div id="search-container">
+            <input type="text" id="search-input" placeholder="Enter your search keyword">
+            <button id="search-button" class="btn login" onclick="search()">Search</button>
+        </div>
+    {% endif %}
     <script
           src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
           integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -86,19 +109,5 @@
             window.location.href = searchUrl;
         }
     </script>
-    <!-- Footer Start -->
-    <section id="footer">
-        <div class="footer">
-          <p>Verbose Vista</p>
-        </div>
-    </section>
-    <section id="Copyright">
-        <!-- Copyright -->
-        <div class="footer-copyright text-center py-3">© 2023 Copyright:
-            <a> Verbose Vista</a> All Rights Reserved
-        </div>
-        <!-- Copyright -->
-    </section>
-    <!-- Footer End -->
 </body>
 </html>

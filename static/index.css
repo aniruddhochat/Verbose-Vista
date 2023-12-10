@@ -13,6 +13,9 @@ body {
     flex-direction: column;
     min-height: 100vh;
     text-align: center;
+    background-size: auto;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 #search-container {
     margin-top: 50px;
