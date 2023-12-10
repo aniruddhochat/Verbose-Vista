@@ -1,0 +1,45 @@
+{% extends 'index.html' %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='search.css') }}">
+<section id="adminAppointmentHistory">
+    <div class="container">
+        <script>
+            function showTable(data) {
+                var resultsContainer = document.getElementById('results-container');
+                resultsContainer.innerHTML = '';
+
+                if (!data || data.length === 0) {
+                    var message = document.createElement('p');
+                    message.textContent = 'Keyword Not Found !!!';
+                    resultsContainer.appendChild(message);
+                    return;
+                }
+
+                var table = document.createElement('table');
+                var headerRow = table.insertRow(0);
+
+                var header1 = headerRow.insertCell(0);
+                header1.textContent = 'File Name(s)';
+
+                var header2 = headerRow.insertCell(1);
+                header2.textContent = 'Count';
+
+                data.sort((a, b) => b[1] - a[1]);
+
+                data.forEach(res => {
+                    var row = table.insertRow(-1);
+                    var cell1 = row.insertCell(0);
+                    cell1.textContent = res[0];
+
+                    var cell2 = row.insertCell(1);
+                    cell2.textContent = res[1];
+                });
+
+                resultsContainer.appendChild(table);
+            }
+            var initialData = {{ response | tojson | safe }};
+            showTable(initialData);
+        </script>
+    </div>
+</section>
+{% endblock content %}
