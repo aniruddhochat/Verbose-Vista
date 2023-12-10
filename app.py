@@ -37,4 +37,4 @@ def search(inputText):
     return render_template('search.html',response=json.loads(response.content))
 
 if __name__ == '__main__':
-    app.run(debug=False,host='0.0.0.0')
+    app.run(debug=False)
