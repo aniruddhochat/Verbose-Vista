@@ -32,7 +32,7 @@ def upload():
     return render_template('upload.html')
 @app.route('/search/<string:inputText>', methods=['GET','POST'])
 def search(inputText):
-    params = {"keyword":inputText}
+    params = {"keyword":inputText.lower()}
     url = "https://us-central1-aniruddho-chatterjee-fall2023.cloudfunctions.net/search"
     response = requests.post(url = url,json=params)
     return render_template('search.html',response=json.loads(response.content))
