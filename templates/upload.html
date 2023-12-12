@@ -5,7 +5,7 @@
     <div class="container">
         <h2>Upload documents</h2>
         <form method="post" enctype="multipart/form-data" action="{{ url_for('upload') }}">
-            <input type="file" name="file" id="upload-input" placeholder="Upload a document" onchange="displayFileName()">
+            <input type="file" name="files" id="upload-input" placeholder="Upload a document" multiple onchange="displayFileName()">
             <button type="submit" id="upload-button" class="btn login">Upload</button>
             <span id="selected-file-name"></span>
         </form>

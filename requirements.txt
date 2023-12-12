@@ -3,3 +3,4 @@ requests
 google-cloud==0.34.0
 google-cloud-storage==2.13.0
 gunicorn
+flask-googlestorage
