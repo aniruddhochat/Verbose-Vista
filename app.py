@@ -32,10 +32,15 @@ def upload():
     return render_template('upload.html')
 @app.route('/search/<string:inputText>', methods=['GET','POST'])
 def search(inputText):
+    cnt = ""
     params = {"keyword":inputText.lower()}
     url = "https://us-central1-aniruddho-chatterjee-fall2023.cloudfunctions.net/search"
     response = requests.post(url = url,json=params)
-    return render_template('search.html',response=json.loads(response.content))
+    if response.status_code == 200:
+        return render_template('search.html',response=json.loads(response.content))
+    else:
+        flash('Keyword Not Found', 'error')
+        return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
