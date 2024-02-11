@@ -5,34 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" type="text/css" href='/static/index.css'>
-    <link
-          rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-          crossorigin="anonymous"
-        />
-        <link
-          rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-          crossorigin="anonymous"
-        />
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-            integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="css/swiper.min.css">
-        <link rel="stylesheet" type="text/css" href="css/animate.css" />
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+    <link rel="manifest" href="/static/site.webmanifest">
     <title>Verbose Vista</title>
 </head>
-<body style="background-image: url('{{ url_for('static', filename='background.png') }}');">
+<body>
     <!-- Navigation Bar Start -->
     <section id="Navigation">
-        <nav class="navbar navbar-expand-lg navbar-light danger-color bg-light">
-            <img src="/static/logo.png" width="2.5%"> </img>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+        <div id="navigation-container">
+            <nav id="navbar" class="navbar">
+                <ul class="navbar-nav">
+                    <a href="/">
+                        <img src="/static/logo.png"  class="logo">
+                    </a>
                     <li class="nav-item">
                         <a class="nav-link selected" onclick= "window.location.href = 'home';" href="/">Home</a>
                     </li>
@@ -40,8 +30,9 @@
                         <a class="nav-link" href="upload">Upload Files</a>
                     </li>
                 </ul>
-            </div>
-        </nav>
+            </nav>
+        </div>
+        
     </section>
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -66,45 +57,35 @@
     {% endwith %}
 
     {% if request.endpoint != 'upload' %}
-        <h1>Verbose Vista</h1>
-        <h2>Search the number of times a keyword occurs in documents</h2>
-
+        <h1>Verbose Vista - Document Search Engine</h1>
+        <h2>Search the documents in which your keywords appear.</h2>
         <div id="search-container">
-            <input type="text" id="search-input" placeholder="Enter your search keyword">
-            <button id="search-button" class="btn login" onclick="search()">Search</button>
+            <input type="text" id="search-input" placeholder="Search for a keyword...">
+            <button id="search-button" class="btn login" onclick="search()">
+                <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
+            </button>
         </div>
-    {% endif %}
-    <script
-          src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-          integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-          crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
 
-    <div id="results-container"></div>
+    {% endif %}
+    {% if 'search' in request.path %}
+        <div id="res-container">
+            <h3 id="search-result">Keyword searched: {{ request.path[8:] }}</h3>
+            <div id="results-container"></div>
+        </div>
+
+    {% endif %}
     {% block content %}
     {% endblock %}
-
+    
     <script>
         function search() {
-            // Get the input text from the search box
             var inputText = document.getElementById('search-input').value;
-
-            // Construct the URL with the input text
-            var searchUrl = '/search/' + encodeURIComponent(inputText);
-
-            // Navigate to the search URL
+            var searchUrl = `/search/${encodeURIComponent(inputText)}`;
             window.location.href = searchUrl;
         }
+        document.getElementById('search-button').addEventListener('click', function() {
+            search();
+          });
     </script>
 </body>
 </html>
