@@ -1,19 +1,28 @@
 {% extends 'index.html' %}
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='upload.css') }}">
+<h2>Upload documents</h2>
 <section id="uploadDocument">
-    <div class="container">
-        <h2>Upload documents</h2>
+    <div id="upload-container" class="form-container">
         <form method="post" enctype="multipart/form-data" action="{{ url_for('upload') }}">
             <input type="file" name="files" id="upload-input" placeholder="Upload a document" multiple onchange="displayFileName()">
-            <button type="submit" id="upload-button" class="btn login">Upload</button>
-            <span id="selected-file-name"></span>
         </form>
+        <button type="submit" id="upload-button" class="btn login">Upload</button>
+        <span id="selected-file-name"></span>
     </div>
     <script>
+        //function displayFileName() {
+        //    var fileName = document.getElementById('upload-input').files[0].name;
+        //    document.getElementById('file-name').innerHTML = fileName;
+        //}
+
         function displayFileName() {
-            var fileName = document.getElementById('upload-input').files[0].name;
-            document.getElementById('file-name').innerHTML = fileName;
+            var fileInput = document.getElementById('upload-input');
+            var fileName = '';
+            for (var i = 0; i < fileInput.files.length; i++) {
+                fileName += fileInput.files[i].name + ', ';
+            }
+            document.getElementById('selected-file-name').innerHTML = fileName;
         }
 
     </script>

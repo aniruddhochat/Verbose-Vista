@@ -24,7 +24,11 @@ def upload():
             blob = bucket.blob(file.filename)
             blob.upload_from_file(file,content_type='text/plain')
             flash(f'File {file.filename} uploaded successfully!', 'success')
-    return render_template('upload.html')
+    if request.method == 'POST':
+        return render_template('index.html')
+    else:
+        return render_template('upload.html')
+
 @app.route('/search/<string:inputText>', methods=['GET','POST'])
 def search(inputText):
     cnt = ""
