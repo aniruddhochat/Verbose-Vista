@@ -33,13 +33,13 @@ They also contain their respective `requirements.txt` files consisting of the ne
 ### Files.
 The Map-Reduce folder contains all the necessary cloud functions (FaaS).
 
-•	`Function-master` – Contains all the necessary files required for the Master process.
-•	`Function-create-chunks` – Contains all the necessary files required for creating the chunks of the data.
-•	`Function-mapper` – Contains all the necessary files required for running the defined number of masters in parallel.
-•	`Function-shufflesort` – Contains all the necessary files required for the grouping and redirecting words to reducers using hashing.
-•	`Function-reducer` – Contains all the necessary files required for the reducer process.
-•	`Function-search` – Contains all the necessary files required for searching the keyword from the website.
-•	`Function-gcs-bucket-trigger` – Contains all the necessary files required for handling the new incoming files and linking the bucket to the Map-Reduce system.
+•	`Function-master` – Contains all the necessary files required for the Master process.  
+•	`Function-create-chunks` – Contains all the necessary files required for creating the chunks of the data.  
+•	`Function-mapper` – Contains all the necessary files required for running the defined number of masters in parallel.  
+•	`Function-shufflesort` – Contains all the necessary files required for the grouping and redirecting words to reducers using hashing.  
+•	`Function-reducer` – Contains all the necessary files required for the reducer process.  
+•	`Function-search` – Contains all the necessary files required for searching the keyword from the website.  
+•	`Function-gcs-bucket-trigger` – Contains all the necessary files required for handling the new incoming files and linking the bucket to the Map-Reduce system.  
 
 The remaining files on repository are all the necessary web development files required for flask app along with Google Cloud Run Deployment.
 
@@ -100,10 +100,13 @@ The reducer aggregates and takes the sum of the count received from the	 shuffle
 ### Combining and updating the inverted index.
 This is executed by the master which combines the output of the reducers and does the inverted indexing. Finally, it updates the unique words currently present in the existing inverted index with the incoming data.
 
-•	**Case 1 – New Word**
-New words get appended in the existing hash table of the inverted index in the form of `{"melancholy": [["A Study in Scarlet.txt", 43]]}`.
-•	**Case 2 – Existing Word**
-In case there is an existing word already present in some other book (which is bound to happen), then it appends the current book name and the count of the times it has occurred in the incoming book into the has map in the form of `{"this": [["A Study in Scarlet.txt", 1400], ["Sherlock Holmes.txt", 390]]}` which means that the word `this` occurs **1400** times in `A study in Scarlet.txt` and **390** times in `Sherlock Holmes.txt`.
+•	**Case 1 – New Word**  
+New words get appended in the existing hash table of the inverted index in the form of `{"melancholy": [["A Study in Scarlet.txt", 43]]}`.  
+
+•	**Case 2 – Existing Word**  
+In case there is an existing word already present in some other book (which is bound to happen), then it appends the current book name and the count of the times it has occurred in the incoming book into the has map in the form of `{"this": [["A Study in Scarlet.txt", 1400], ["Sherlock Holmes.txt", 390]]}`.
+
+This means that the word `this` occurs **1400** times in `A study in Scarlet.txt` and **390** times in `Sherlock Holmes.txt`.
 
 This is out final stage of indexing which can be used to perform search operation on.
 

@@ -1,0 +1,1 @@
+MASTERURL = 'https://us-central1-aniruddho-chatterjee-fall2023.cloudfunctions.net/master'
